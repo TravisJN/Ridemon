@@ -23,10 +23,11 @@ RidemonApp.controller("RequestController", ["$scope", "$http", "$q", "$sce", "Ri
     RideService.rideMaker($scope.request.start_address, $scope.request.end_address, function(rideObject) {
       // After request, set $scope.ride which will render the map view
       $scope.ride = rideObject;
+      console.log($scope.ride);
       // Resize the map to the current view size
       RideService.resizeMap();
     });
-  }
+  };
 
   $scope.cancelRide = function() {
     $scope.ride.cancelRide(function() {

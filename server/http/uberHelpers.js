@@ -10,6 +10,10 @@ module.exports.requestRide = function(req, res) {
       startLong = req.body.data.start_longitude;
   // Get legendary ID if there's a legendary in the request
   var legendary = req.body.data.legendary;
+
+  // JSON Object sent back to client as response
+  var responseData = {};
+
   // User is not logged in if there is no token
   if(token === undefined) {
     console.log('Error: user not authenticated');
@@ -27,14 +31,13 @@ module.exports.requestRide = function(req, res) {
         uberUtils.makeRideRequest(req, product_id, token, function(rideData) {
           // Make call to pokemon API to get new pokemon for the user
           if(legendary === false) {
-            pokemonHelper.addPokemon(req, res);
+            responseData.pokemon_id = pokemonHelper.addPokemon(req, res);
           } else {
             console.log("LEGENDARY: ", legendary);
-            pokemonHelper.addPokemon(req, res, legendary);
+            responseData.pokemon_id = pokemonHelper.addPokemon(req, res, legendary);
           }
           // Get map
           uberUtils.getMap(rideData.request_id, token, function(mapURL) {
-            var responseData = {}; // JSON Object sent back to client as response
             responseData.map = mapURL;
             responseData.request_id = rideData.request_id;
             res.end(JSON.stringify(responseData));

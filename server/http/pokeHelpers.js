@@ -23,6 +23,8 @@ module.exports.addPokemon = function(req, response, pokemonId) {
     }, function (errorObject) {
       console.log("the read failed: " + errorObject.code);
     });
+
+  return pokemonId;
 };
 
 
