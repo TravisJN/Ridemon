@@ -30,12 +30,8 @@ module.exports.requestRide = function(req, res) {
 
         uberUtils.makeRideRequest(req, product_id, token, function(rideData) {
           // Make call to pokemon API to get new pokemon for the user
-          if(legendary === false) {
-            responseData.pokemon_id = pokemonHelper.addPokemon(req, res);
-          } else {
-            console.log("LEGENDARY: ", legendary);
-            responseData.pokemon_id = pokemonHelper.addPokemon(req, res, legendary);
-          }
+          responseData.pokemon_id = pokemonHelper.addPokemon(req, res, legendary);
+
           // Get map
           uberUtils.getMap(rideData.request_id, token, function(mapURL) {
             responseData.map = mapURL;
